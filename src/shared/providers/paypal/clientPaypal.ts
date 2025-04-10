@@ -1,7 +1,8 @@
+import config from '@/shared/lib/config';
 import { Client, Environment, LogLevel } from '@paypal/paypal-server-sdk';
 
-const CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
-const CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || '';
+const CLIENT_ID = config.paypal.clientId;
+const CLIENT_SECRET = config.paypal.clientSecret;
 
 const client = new Client({
   clientCredentialsAuthCredentials: {

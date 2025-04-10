@@ -4,10 +4,7 @@ import {
 } from '@/shared/gql/client/__generated__/graphql';
 import { GET_PRIVACY_POLICY } from '@/shared/gql/client/privacy/privacyQueries';
 
-import {
-  getClient,
-  query,
-} from '@/shared/providers/apollo-client/apollo-client-SSR';
+import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
 import React from 'react';
 import config from '@/shared/lib/config';
 
@@ -18,7 +15,7 @@ const PrivacyPolicyPage = async () => {
   >({
     query: GET_PRIVACY_POLICY,
     variables: {
-      id: config.privacy.latestPrivacyPolicy || '',
+      id: config.privacy.latestPrivacyPolicy,
     },
   });
 

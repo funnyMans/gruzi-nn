@@ -1,7 +1,8 @@
+import config from '@/shared/lib/config';
 import { Box, Card } from '@mui/material';
 import { GoogleMapsEmbed } from '@next/third-parties/google';
 
-const GMapApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
+const GMapApiKey = config.googleMaps.apiKey;
 
 interface IDirections {
   pickupLocation: any;
