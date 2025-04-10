@@ -9,12 +9,6 @@ import React from 'react';
 import config from '@/shared/lib/config';
 
 const TermsOfUsePage = async () => {
-  if (!config.terms.latestTermsOfUse) {
-    return (
-      <div>Error: Terms of Use ID is not set in environment variables.</div>
-    );
-  }
-
   const res = await query<GetTermsOfUseQuery, GetTermsOfUseQueryVariables>({
     query: GET_TERMS_OF_USE,
     variables: {
