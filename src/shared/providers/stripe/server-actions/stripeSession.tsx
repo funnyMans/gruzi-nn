@@ -1,9 +1,10 @@
 'use server';
 
+import config from '@/shared/lib/config';
 import { Stripe } from 'stripe';
 
 // Load Stripe API key from environment variables
-const apiKey = process.env.NEXT_STRIPE_KEY as string;
+const apiKey = config.stripe.secretKey;
 const stripe = new Stripe(apiKey);
 interface NewSessionOptions {
   priceId: string;
