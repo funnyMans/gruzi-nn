@@ -1,4 +1,4 @@
-import ShipmentList from '@/features/shipments/lists/ShipmentList';
+// import ShipmentList from '@/features/shipments/lists/ShipmentList';
 
 const PostedShipmentsPage = async () => {
   return <>{/* <ShipmentList /> */}</>;
