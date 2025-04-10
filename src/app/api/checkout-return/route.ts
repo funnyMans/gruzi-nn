@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
 import config from '@/shared/lib/config';
 
 const apiKey = config.stripe.secretKey;
 const stripe = new Stripe(apiKey);
 
-export const GET = async (request: NextRequest, response: NextResponse) => {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
 
   const stripeSessionId = searchParams.get('session_id');

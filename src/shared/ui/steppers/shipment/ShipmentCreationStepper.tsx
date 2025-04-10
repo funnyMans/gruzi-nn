@@ -21,9 +21,10 @@ function ShipmentCreationStepper({ steps }: IProps) {
   const { values, submitForm } = useFormikContext();
   const [activeStep, setActiveStep] = useState(0);
 
-  const stepIcon = memo((props: any) => (
+  const MemoizedIconComponent = (props: any) => (
     <ColorlibStepIcon {...props} steps={steps} />
-  ));
+  );
+  const stepIcon = memo(MemoizedIconComponent);
 
   const handleConfirm = async () => {
     await submitForm();

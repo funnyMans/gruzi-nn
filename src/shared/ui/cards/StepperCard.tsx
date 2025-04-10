@@ -18,7 +18,7 @@ const StepperCard = ({ steps, activeStep, setActiveStep }: IProps) => {
   const [skipped, setSkipped] = useState(new Set<number>());
   const isStepOptional = useMemo(() => {
     return activeStep <= steps.length ? steps[activeStep].optional : false;
-  }, [steps.length, activeStep]);
+  }, [steps, activeStep]);
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);

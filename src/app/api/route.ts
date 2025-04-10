@@ -1,7 +1,6 @@
-import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
-async function handler(req: NextApiRequest) {
+async function handler() {
   return NextResponse.json({ success: false }, { status: 400 });
 }
 

@@ -17,7 +17,7 @@ async function handler(req: NextApiRequest) {
           { status: 200 }
         );
       } catch (error) {
-        return NextResponse.json({ success: false }, { status: 400 });
+        return NextResponse.json({ success: false, error }, { status: 400 });
       }
       break;
     case 'POST':
@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest) {
           { status: 201 }
         );
       } catch (error) {
-        return NextResponse.json({ success: false }, { status: 400 });
+        return NextResponse.json({ success: false, error }, { status: 400 });
       }
       break;
     default:

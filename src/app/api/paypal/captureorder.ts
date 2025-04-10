@@ -1,4 +1,3 @@
-import client from '@/shared/providers/paypal/clientPaypal';
 import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 

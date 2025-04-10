@@ -14,6 +14,9 @@ const eslintConfig = [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Warn for unused variables, ignore those starting with "_"
+      '@typescript-eslint/no-empty-interface': 'off', // Allow empty interfaces
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
 ];
