@@ -1,14 +1,14 @@
 const config = {
   stripe: {
     publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE as string,
-    secretKey: process.env.NEXT_STRIPE_KEY as string,
+    secretKey: process.env.NEXT_PUBLIC_STRIPE_KEY as string,
   },
   paypal: {
-    clientId: process.env.PAYPAL_CLIENT_ID!,
-    clientSecret: process.env.PAYPAL_CLIENT_SECRET!,
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+    clientSecret: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_SECRET!,
   },
   mongodb: {
-    uri: process.env.MONGODB_URI!,
+    uri: process.env.NEXT_PUBLIC_MONGODB_URI!,
   },
   googleMaps: {
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -17,8 +17,8 @@ const config = {
     apiKey: process.env.NEXT_PUBLIC_YMAPS_API_KEY!,
   },
   github: {
-    clientId: process.env.GITHUB_CLIENT_ID!,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID!,
+    clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET!,
   },
   terms: {
     latestTermsOfUse: process.env.NEXT_PUBLIC_LATEST_TERMS_OF_USE!,
