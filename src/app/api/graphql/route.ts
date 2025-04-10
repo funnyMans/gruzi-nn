@@ -1,6 +1,5 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import dbConnect from '@/shared/lib/mongo/db';
 
 import { resolvers } from '@/shared/gql/server/schema/resolvers.generated';
 import { typeDefs } from '@/shared/gql/server/schema/typeDefs.generated';
