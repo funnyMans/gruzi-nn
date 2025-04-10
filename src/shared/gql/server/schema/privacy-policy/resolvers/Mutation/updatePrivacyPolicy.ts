@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const updatePrivacyPolicy: NonNullable<
   MutationResolvers['updatePrivacyPolicy']
@@ -5,6 +6,7 @@ export const updatePrivacyPolicy: NonNullable<
   const { id, lastUpdated, introduction, sections } = _arg;
   const { PrivacyPolicy } = _ctx;
   try {
+    await dbConnect();
     // Save the new Terms of Use document to the database
     const savedPrivacyPolicy = await PrivacyPolicy.findByIdAndUpdate(
       id,

@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { Broker, MutationResolvers } from './../../../types.generated';
 export const updateBroker: NonNullable<
   MutationResolvers['updateBroker']
@@ -16,6 +17,8 @@ export const updateBroker: NonNullable<
   if (contact) updateFields.contact = contact;
 
   try {
+    await dbConnect();
+
     const updatedShipment = await Broker.findOneAndUpdate(
       { brokerId },
       { $set: updateFields },

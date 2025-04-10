@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { QueryResolvers } from './../../../types.generated';
 export const shipments: NonNullable<QueryResolvers['shipments']> = async (
   _parent,
@@ -6,6 +7,7 @@ export const shipments: NonNullable<QueryResolvers['shipments']> = async (
 ) => {
   const { Shipment } = _ctx;
   try {
+    await dbConnect();
     const shipment = await Shipment.find({});
     if (!shipment) {
       throw new Error(`Brokers not found`);

@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const createBroker: NonNullable<
   MutationResolvers['createBroker']
@@ -5,6 +6,8 @@ export const createBroker: NonNullable<
   const { input: broker } = _arg;
   const { Broker } = _ctx;
   try {
+    await dbConnect();
+
     const shipment = await Broker.save(broker);
     return shipment;
   } catch (error: any) {

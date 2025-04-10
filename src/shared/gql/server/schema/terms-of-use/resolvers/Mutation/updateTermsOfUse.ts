@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const updateTermsOfUse: NonNullable<
   MutationResolvers['updateTermsOfUse']
@@ -5,6 +6,7 @@ export const updateTermsOfUse: NonNullable<
   const { id, terms } = _arg;
   const { TermsOfUse } = _ctx;
   try {
+    await dbConnect();
     // Find the existing Terms of Use document by ID
     const updatedTermsOfUse = await TermsOfUse.findByIdAndUpdate(
       id,

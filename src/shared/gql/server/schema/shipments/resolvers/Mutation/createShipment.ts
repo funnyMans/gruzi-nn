@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const createShipment: NonNullable<
   MutationResolvers['createShipment']
@@ -5,6 +6,8 @@ export const createShipment: NonNullable<
   const { input: cargo } = _arg;
   const { Shipment } = _ctx;
   try {
+    await dbConnect();
+
     const shipment = await Shipment.save(cargo);
     return shipment;
   } catch (error: any) {

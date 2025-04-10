@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { QueryResolvers } from '../../../types.generated';
 export const termsOfUse: NonNullable<QueryResolvers['termsOfUse']> = async (
   _parent,
@@ -8,6 +9,8 @@ export const termsOfUse: NonNullable<QueryResolvers['termsOfUse']> = async (
   const { TermsOfUse } = _ctx;
 
   try {
+    await dbConnect();
+
     const terms = await TermsOfUse.findById(id);
     if (!terms) {
       throw new Error(`Terms of use with id ${id} not found`);

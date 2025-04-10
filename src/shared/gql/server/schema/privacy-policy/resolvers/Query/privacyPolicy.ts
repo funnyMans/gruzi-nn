@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { QueryResolvers } from '../../../types.generated';
 export const privacyPolicy: NonNullable<
   QueryResolvers['privacyPolicy']
@@ -6,6 +7,8 @@ export const privacyPolicy: NonNullable<
   const { PrivacyPolicy } = _ctx;
 
   try {
+    await dbConnect();
+
     const policy = await PrivacyPolicy.findById(id);
     if (!policy) {
       throw new Error(`Policy with id ${id} not found`);

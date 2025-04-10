@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const createTermsOfUse: NonNullable<
   MutationResolvers['createTermsOfUse']
@@ -5,6 +6,7 @@ export const createTermsOfUse: NonNullable<
   const { effectiveDate, terms } = _arg;
   const { TermsOfUse } = _ctx;
   try {
+    await dbConnect();
     // Create a new Terms of Use document
     const newTermsOfUse = TermsOfUse({
       effectiveDate: new Date(effectiveDate), // Ensure the effectiveDate is a Date object
