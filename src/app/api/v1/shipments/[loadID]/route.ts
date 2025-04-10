@@ -1,5 +1,3 @@
-// pages/api/items/[id].js
-
 import dbConnect from '@/shared/lib/mongo/db';
 import Shipment from '@/shared/lib/mongo/models/Shipment';
 import { NextRequest, NextResponse } from 'next/server';
