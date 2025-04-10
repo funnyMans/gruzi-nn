@@ -1,14 +1,16 @@
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-async function handler(req: NextApiRequest) {
+async function handler(req: NextRequest) {
+  const reqBodyData = await req.json();
+  const { order_price, user_id } = reqBodyData;
+
   if (req.method != 'POST')
     return NextResponse.json(
       { success: false, message: 'Not Found' },
       { status: 404 }
     );
 
-  if (!req.body.order_price || !req.body.user_id)
+  if (!order_price || !user_id)
     return NextResponse.json(
       {
         success: false,

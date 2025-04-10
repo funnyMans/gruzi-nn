@@ -1,9 +1,8 @@
 import dbConnect from '@/shared/lib/mongo/db';
 import Shipment from '@/shared/lib/mongo/models/Shipment';
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-async function handler(req: NextApiRequest) {
+async function handler(req: NextRequest) {
   await dbConnect();
 
   const { method } = req;
