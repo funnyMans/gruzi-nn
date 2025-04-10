@@ -15,7 +15,7 @@ export const postStripeSession = async ({ priceId }: NewSessionOptions) => {
   const returnUrl =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000/api/checkout-return?session_id={CHECKOUT_SESSION_ID}'
-      : 'https://your-production-site.com//checkout-return?session_id={CHECKOUT_SESSION_ID}';
+      : 'https://gruzi-nn.vercel.com//checkout-return?session_id={CHECKOUT_SESSION_ID}';
 
   try {
     // Create Stripe Checkout session

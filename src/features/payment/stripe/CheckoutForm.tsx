@@ -6,10 +6,9 @@ import {
   EmbeddedCheckout,
 } from '@stripe/react-stripe-js';
 import { postStripeSession } from '@/shared/providers/stripe/server-actions/stripeSession';
+import config from '@/shared/lib/config';
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE as string
-);
+const stripePromise = loadStripe(config.stripe.publishableKey);
 
 export const CheckoutForm = ({ priceId }: { priceId: string }) => {
   const fetchClientSecret = useCallback(async () => {

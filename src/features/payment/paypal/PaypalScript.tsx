@@ -2,10 +2,9 @@
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import React from 'react';
 import PaypalCheckoutForm from './PaypalCheckoutForm';
+import config from '@/shared/lib/config';
 
-const clientId =
-  process.env.PAYPAL_CLIENT_ID ||
-  'AYUKtRQkAa1ivC9LcrTPlPNkGuhcemWIFbFmFCwac4av5q4Nbc0h8GwX4ItBu5vHPiDQM7bfIVl7bWXn';
+const clientId = config.paypal.clientId;
 const PaypalScript = () => {
   return (
     <PayPalScriptProvider options={{ clientId }}>
