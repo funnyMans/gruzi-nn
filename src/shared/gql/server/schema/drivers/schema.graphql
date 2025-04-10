@@ -1,0 +1,10 @@
+extend type Query {
+  driver(driverId: ID!): Driver
+  drivers: [Driver!]!
+}
+type Driver {
+  driverId: ID!
+  name: String!
+  licenseNumber: String!
+  contact: Contact!
+}

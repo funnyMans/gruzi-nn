@@ -1,0 +1,62 @@
+# Define the Terms of Use type
+extend type Query {
+  termsOfUse(id: ID!): TermsOfUse
+}
+
+# Mutations to create or update Terms of Use
+extend type Mutation {
+  createTermsOfUse(effectiveDate: String!, terms: TermsInput!): TermsOfUse
+  updateTermsOfUse(id: ID!, terms: TermsInput!): TermsOfUse
+}
+
+type TermsOfUse {
+  id: ID!
+  effectiveDate: String!
+  terms: Terms!
+}
+
+# Define the nested Terms type
+type Terms {
+  general: General!
+  sections: [Section!]!
+  acknowledgement: String!
+}
+
+type General {
+  title: String!
+  intro: String!
+}
+
+type Section {
+  title: String!
+  content: [Content!]!
+}
+
+type Content {
+  term: String!
+  definition: String!
+}
+
+# Define the input type for creating or updating terms
+input GeneralInput {
+  title: String!
+  intro: String!
+}
+
+input SectionInput {
+  title: String!
+  content: [ContentInput!]!
+}
+
+input ContentInput {
+  term: String!
+  definition: String!
+}
+
+input TermsInput {
+  general: GeneralInput!
+  sections: [SectionInput!]!
+  acknowledgement: String!
+}
+
+# Queries to get Terms of Use

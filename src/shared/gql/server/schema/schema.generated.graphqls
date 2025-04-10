@@ -1,0 +1,297 @@
+type Address {
+  city: String!
+  state: String!
+  street: String!
+  zip: String!
+}
+
+input AddressInput {
+  city: String!
+  state: String!
+  street: String!
+  zip: String!
+}
+
+type Broker {
+  address: Address!
+  associatedShipments: [ID]
+  brokerId: ID!
+  contact: Contact!
+  licenseNumber: String!
+  name: String!
+}
+
+enum CargoCategory {
+  GENERAL_GOODS
+  HAZARDOUS
+  MILITARY
+  PERISHABLE
+}
+
+type CargoDetails {
+  cargoCategory: CargoCategory!
+  costValue: Float!
+  currency: Currency!
+  description: String!
+  dimensions: Dimensions!
+  handlingInstructions: String
+  hazardousDetails: HazardousDetails
+  isHazardous: Boolean!
+  volume: Float!
+  weight: Float!
+}
+
+input CargoDetailsInput {
+  cargoCategory: CargoCategory!
+  costValue: Float!
+  currency: Currency!
+  description: String!
+  dimensions: DimensionsInput!
+  handlingInstructions: String
+  hazardousDetails: HazardousDetailsInput
+  isHazardous: Boolean!
+  volume: Float!
+  weight: Float!
+}
+
+type Contact {
+  email: String!
+  phone: String!
+}
+
+input ContactInput {
+  email: String!
+  name: String!
+  phone: String!
+}
+
+type Content {
+  definition: String!
+  term: String!
+}
+
+input ContentInput {
+  definition: String!
+  term: String!
+}
+
+type Coordinates {
+  latitude: Float!
+  longitude: Float!
+}
+
+input CoordinatesInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+input CreateBrokerInput {
+  address: AddressInput!
+  brokerId: ID!
+  contact: ContactInput!
+  licenseNumber: String!
+  name: String!
+}
+
+input CreateShipmentInput {
+  brokerId: ID!
+  cargoDetails: CargoDetailsInput!
+  deliveryLocation: LocationInput!
+  driverId: ID
+  pickupLocation: LocationInput!
+  status: ShipmentStatus!
+  timestamps: TimestampsInput!
+  truckId: ID
+}
+
+enum Currency {
+  EUR
+  RUR
+  USD
+}
+
+type Dimensions {
+  height: Float!
+  length: Float!
+  width: Float!
+}
+
+input DimensionsInput {
+  height: Float!
+  length: Float!
+  width: Float!
+}
+
+type Driver {
+  contact: Contact!
+  driverId: ID!
+  licenseNumber: String!
+  name: String!
+}
+
+type General {
+  intro: String!
+  title: String!
+}
+
+input GeneralInput {
+  intro: String!
+  title: String!
+}
+
+type HazardousDetails {
+  class: String
+  packingGroup: String
+  unNumber: String
+}
+
+input HazardousDetailsInput {
+  class: String
+  packingGroup: String
+  unNumber: String
+}
+
+type Location {
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input LocationInput {
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+type Mutation {
+  addTrackingUpdate(input: TrackingUpdateInput!, shipmentId: ID!): Shipment!
+  createBroker(input: CreateBrokerInput!): Broker
+  createPrivacyPolicy(introduction: String!, lastUpdated: String!, sections: [PrivacyPolicySectionInput!]!): PrivacyPolicy
+  createShipment(input: CreateShipmentInput!): Shipment!
+  createTermsOfUse(effectiveDate: String!, terms: TermsInput!): TermsOfUse
+  updateBroker(input: UpdateBrokerInput!): Broker
+  updatePrivacyPolicy(id: ID!, introduction: String!, lastUpdated: String!, sections: [PrivacyPolicySectionInput!]!): PrivacyPolicy
+  updateShipmentStatus(shipmentId: ID!, status: ShipmentStatus!): Shipment!
+  updateTermsOfUse(id: ID!, terms: TermsInput!): TermsOfUse
+}
+
+type PrivacyPolicy {
+  createdAt: String!
+  id: ID!
+  introduction: String!
+  lastUpdated: String!
+  sections: [PrivacyPolicySection!]!
+  updatedAt: String!
+}
+
+type PrivacyPolicySection {
+  content: [String!]!
+  title: String!
+}
+
+input PrivacyPolicySectionInput {
+  content: [String!]!
+  title: String!
+}
+
+type Query {
+  broker(brokerId: ID!): Broker
+  brokers: [Broker]!
+  driver(driverId: ID!): Driver
+  drivers: [Driver!]!
+  privacyPolicy(id: ID!): PrivacyPolicy
+  shipment(shipmentId: ID!): Shipment
+  shipments(status: ShipmentStatus): [Shipment!]!
+  termsOfUse(id: ID!): TermsOfUse
+  truck(truckId: ID!): Truck
+  trucks: [Truck]!
+}
+
+type Section {
+  content: [Content!]!
+  title: String!
+}
+
+input SectionInput {
+  content: [ContentInput!]!
+  title: String!
+}
+
+type Shipment {
+  brokerId: ID!
+  cargoDetails: CargoDetails!
+  deliveryLocation: Location!
+  driverId: ID!
+  pickupLocation: Location!
+  shipmentId: ID!
+  status: ShipmentStatus!
+  timestamps: Timestamps!
+  trackingUpdates: [TrackingUpdate]!
+  truckId: ID!
+}
+
+enum ShipmentStatus {
+  CANCELLED
+  DELIVERED
+  IN_TRANSIT
+  SCHEDULED
+}
+
+type Terms {
+  acknowledgement: String!
+  general: General!
+  sections: [Section!]!
+}
+
+input TermsInput {
+  acknowledgement: String!
+  general: GeneralInput!
+  sections: [SectionInput!]!
+}
+
+type TermsOfUse {
+  effectiveDate: String!
+  id: ID!
+  terms: Terms!
+}
+
+type Timestamps {
+  actualDelivery: String
+  actualPickup: String
+  scheduledDelivery: String!
+  scheduledPickup: String!
+}
+
+input TimestampsInput {
+  scheduledDelivery: String!
+  scheduledPickup: String!
+}
+
+type TrackingUpdate {
+  location: Coordinates!
+  status: String!
+  timestamp: String!
+}
+
+input TrackingUpdateInput {
+  location: CoordinatesInput!
+  status: String!
+  timestamp: String!
+}
+
+type Truck {
+  capacity: Float!
+  licensePlate: String!
+  model: String!
+  truckId: ID!
+}
+
+input UpdateBrokerInput {
+  address: AddressInput
+  brokerId: ID!
+  contact: ContactInput
+  licenseNumber: String
+  name: String
+}

@@ -1,0 +1,60 @@
+extend type Query {
+  broker(brokerId: ID!): Broker
+  brokers: [Broker]!
+}
+
+extend type Mutation {
+  createBroker(input: CreateBrokerInput!): Broker
+  updateBroker(input: UpdateBrokerInput!): Broker
+}
+
+type Broker {
+  brokerId: ID!
+  name: String!
+  contact: Contact!
+  address: Address!
+  licenseNumber: String!
+  associatedShipments: [ID]
+}
+
+type Contact {
+  phone: String!
+  email: String!
+}
+
+type Address {
+  street: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input AddressInput {
+  street: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input ContactInput {
+  name: String!
+  phone: String!
+  email: String!
+}
+
+# Create a mutation input type that includes Address and Contac=
+input CreateBrokerInput {
+  brokerId: ID!
+  name: String!
+  licenseNumber: String!
+  address: AddressInput!
+  contact: ContactInput!
+}
+
+input UpdateBrokerInput {
+  brokerId: ID!
+  name: String
+  licenseNumber: String
+  address: AddressInput
+  contact: ContactInput
+}

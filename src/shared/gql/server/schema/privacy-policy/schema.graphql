@@ -1,0 +1,42 @@
+# Query to fetch the current Privacy Policy
+extend type Query {
+  privacyPolicy(id: ID!): PrivacyPolicy
+}
+
+# Mutation to create a new Privacy Policy
+extend type Mutation {
+  createPrivacyPolicy(
+    lastUpdated: String!
+    introduction: String!
+    sections: [PrivacyPolicySectionInput!]!
+  ): PrivacyPolicy
+
+  updatePrivacyPolicy(
+    id: ID!
+    lastUpdated: String!
+    introduction: String!
+    sections: [PrivacyPolicySectionInput!]!
+  ): PrivacyPolicy
+}
+
+# Define the content for each section of the Privacy Policy
+type PrivacyPolicySection {
+  title: String!
+  content: [String!]! # Array of strings (e.g., paragraphs, bullet points)
+}
+
+# Define the structure of the Privacy Policy object
+type PrivacyPolicy {
+  id: ID!
+  lastUpdated: String!
+  introduction: String!
+  sections: [PrivacyPolicySection!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+# Input type for the Privacy Policy sections (used in mutations)
+input PrivacyPolicySectionInput {
+  title: String!
+  content: [String!]! # Array of strings (e.g., paragraphs, bullet points)
+}

@@ -1,0 +1,152 @@
+extend type Query {
+  shipment(shipmentId: ID!): Shipment
+  shipments(status: ShipmentStatus): [Shipment!]!
+}
+
+extend type Mutation {
+  createShipment(input: CreateShipmentInput!): Shipment!
+  updateShipmentStatus(shipmentId: ID!, status: ShipmentStatus!): Shipment!
+  addTrackingUpdate(shipmentId: ID!, input: TrackingUpdateInput!): Shipment!
+}
+
+type Shipment {
+  shipmentId: ID!
+  brokerId: ID!
+  driverId: ID!
+  truckId: ID!
+  cargoDetails: CargoDetails!
+  pickupLocation: Location!
+  deliveryLocation: Location!
+  status: ShipmentStatus!
+  timestamps: Timestamps!
+  trackingUpdates: [TrackingUpdate]!
+}
+
+type CargoDetails {
+  description: String!
+  weight: Float!
+  volume: Float!
+  dimensions: Dimensions!
+  costValue: Float!
+  currency: Currency!
+  handlingInstructions: String
+  isHazardous: Boolean!
+  hazardousDetails: HazardousDetails
+  cargoCategory: CargoCategory!
+}
+
+type Dimensions {
+  length: Float!
+  width: Float!
+  height: Float!
+}
+
+type HazardousDetails {
+  unNumber: String
+  class: String
+  packingGroup: String
+}
+
+type Location {
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+type Timestamps {
+  scheduledPickup: String!
+  actualPickup: String
+  scheduledDelivery: String!
+  actualDelivery: String
+}
+
+type TrackingUpdate {
+  timestamp: String!
+  location: Coordinates!
+  status: String!
+}
+
+type Coordinates {
+  latitude: Float!
+  longitude: Float!
+}
+
+enum ShipmentStatus {
+  SCHEDULED
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+enum Currency {
+  RUR
+  USD
+  EUR
+}
+
+enum CargoCategory {
+  HAZARDOUS
+  MILITARY
+  PERISHABLE
+  GENERAL_GOODS
+}
+
+input CreateShipmentInput {
+  brokerId: ID!
+  truckId: ID
+  driverId: ID
+  cargoDetails: CargoDetailsInput!
+  pickupLocation: LocationInput!
+  deliveryLocation: LocationInput!
+  status: ShipmentStatus!
+  timestamps: TimestampsInput!
+}
+
+input CargoDetailsInput {
+  description: String!
+  weight: Float!
+  volume: Float!
+  dimensions: DimensionsInput!
+  costValue: Float!
+  currency: Currency!
+  handlingInstructions: String
+  isHazardous: Boolean!
+  hazardousDetails: HazardousDetailsInput
+  cargoCategory: CargoCategory!
+}
+
+input DimensionsInput {
+  length: Float!
+  width: Float!
+  height: Float!
+}
+
+input HazardousDetailsInput {
+  unNumber: String
+  class: String
+  packingGroup: String
+}
+
+input LocationInput {
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input TimestampsInput {
+  scheduledPickup: String!
+  scheduledDelivery: String!
+}
+
+input TrackingUpdateInput {
+  timestamp: String!
+  location: CoordinatesInput!
+  status: String!
+}
+
+input CoordinatesInput {
+  latitude: Float!
+  longitude: Float!
+}
