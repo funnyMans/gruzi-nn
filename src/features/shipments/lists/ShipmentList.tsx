@@ -13,7 +13,7 @@ const ShipmentList = async () => {
   });
 
   const shipments = res.data.shipments;
-  return (
+  return shipments.length ? (
     <Box display={'flex'} flexDirection={'column'} gap={1}>
       {shipments.map((shipment) => (
         <ShipmentViewCard
@@ -24,6 +24,8 @@ const ShipmentList = async () => {
         />
       ))}
     </Box>
+  ) : (
+    <div>No shipments</div>
   );
 };
 
