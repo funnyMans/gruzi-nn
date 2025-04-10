@@ -13,7 +13,15 @@ import PrivacyPolicy from '@/shared/lib/mongo/models/PrivacyPolicy';
 const server = new ApolloServer({
   resolvers,
   typeDefs,
-  introspection: true,
+  introspection: true, // 👈 Allows schema exploration in production
+  // 👇 Enables Apollo Sandbox even in production
+  plugins: [
+    require('@apollo/server/plugin/landingPage/default').ApolloServerPluginLandingPageLocalDefault(
+      {
+        embed: true,
+      }
+    ),
+  ],
 });
 
 const handler = startServerAndCreateNextHandler<any, any>(server, {
