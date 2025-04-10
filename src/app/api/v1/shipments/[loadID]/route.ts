@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 async function handler(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   const { method } = req;
-  const { id } = params;
+  const { id } = await props.params;
 
   await dbConnect();
   const newShipment = await Shipment.create(req.body);
