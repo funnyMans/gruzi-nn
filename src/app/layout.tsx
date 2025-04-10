@@ -8,6 +8,8 @@ import NextAuthClientProvider from '@/shared/providers/next-auth/ClientProvider'
 import LayoutProvider from '@/shared/ui/LayoutProvider';
 
 import './globals.css';
+import { Suspense } from 'react';
+import { LinearProgress } from '@mui/material';
 
 export const metadata: Metadata = {
   title: 'Gruzi-NN',
@@ -22,7 +24,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <AppRouterCacheProvider options={{ key: 'css' }}>
           <ApolloClientProvider>
             <NextAuthClientProvider>
-              <LayoutProvider>{props.children}</LayoutProvider>
+              <Suspense fallback={<LinearProgress />}>
+                <LayoutProvider>{props.children}</LayoutProvider>
+              </Suspense>
             </NextAuthClientProvider>
           </ApolloClientProvider>
         </AppRouterCacheProvider>

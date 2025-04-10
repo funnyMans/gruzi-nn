@@ -19,7 +19,6 @@ const server = new ApolloServer({
 
 const handler = startServerAndCreateNextHandler<any, any>(server, {
   context: async () => ({
-    db: await dbConnect(),
     Shipment,
     Broker,
     Driver,
