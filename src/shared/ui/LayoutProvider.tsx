@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { Authentication, type Branding, type Navigation } from '@toolpad/core';
@@ -194,16 +194,18 @@ function LayoutProvider({ children }: IProps) {
   const { data: session } = useSession();
 
   return (
-    <NextAppProvider
-      session={session}
-      navigation={NAVIGATION}
-      branding={BRANDING}
-      authentication={AUTHENTICATION}
-    >
-      <ThemeProvider theme={theme}>
-        <LayoutStructure>{children}</LayoutStructure>
-      </ThemeProvider>
-    </NextAppProvider>
+    <Suspense fallback={<div>Loading...</div>}>
+      <NextAppProvider
+        session={session}
+        navigation={NAVIGATION}
+        branding={BRANDING}
+        authentication={AUTHENTICATION}
+      >
+        <ThemeProvider theme={theme}>
+          <LayoutStructure>{children}</LayoutStructure>
+        </ThemeProvider>
+      </NextAppProvider>
+    </Suspense>
   );
 }
 
