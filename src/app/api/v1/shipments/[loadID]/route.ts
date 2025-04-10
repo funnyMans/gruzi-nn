@@ -2,21 +2,22 @@
 
 import dbConnect from '@/shared/lib/mongo/db';
 import Shipment from '@/shared/lib/mongo/models/Shipment';
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-async function handler(req: NextApiRequest) {
-  const {
-    query: { id },
-    method,
-  } = req;
+async function handler(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { method } = req;
+  const { id } = params;
 
   await dbConnect();
+  const newShipment = await Shipment.create(req.body);
 
   switch (method) {
     case 'PUT':
       try {
-        const shipment = await Shipment.findByIdAndUpdate(id, req.body, {
+        const shipment = await Shipment.findByIdAndUpdate(id, newShipment, {
           new: true,
           runValidators: true,
         });
