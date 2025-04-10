@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { DashboardLayout, PageContainer, ThemeSwitcher } from '@toolpad/core';
+import { DashboardLayout, PageContainer } from '@toolpad/core';
 
 interface IProps {
   children: ReactNode;

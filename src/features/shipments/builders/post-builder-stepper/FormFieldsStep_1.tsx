@@ -6,11 +6,11 @@ import { Field, FieldProps } from 'formik';
 import { Currency } from '@/shared/gql/client/__generated__/graphql';
 
 export default function FormFieldsStep_1() {
-  const CustomInput = ({ field, form, ...props }: FieldProps) => {
-    return <OutlinedInput {...field} {...props} />;
+  const CustomInput = ({ field, ...rest }: FieldProps) => {
+    return <OutlinedInput {...field} {...rest} />;
   };
-  const CustomSelect = ({ field, form, ...props }: FieldProps) => {
-    return <Select {...field} {...props} />;
+  const CustomSelect = ({ field, ...rest }: FieldProps) => {
+    return <Select {...field} {...rest} />;
   };
   return (
     <Grid container spacing={3} direction={'column'}>

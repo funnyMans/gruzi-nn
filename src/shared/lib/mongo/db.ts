@@ -6,7 +6,10 @@ const MONGODB_URI = config.mongodb.uri;
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
+
 declare global {
+  // Allow global `var` declarations in TypeScript files
+  // eslint-disable-next-line no-var, vars-on-top
   var mongoose: any;
 }
 /**
