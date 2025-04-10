@@ -1,4 +1,3 @@
-import { ResponsiveChartContainer } from '@mui/x-charts';
 import { BarChart } from '@mui/x-charts/BarChart';
 
 interface IProps {
@@ -8,45 +7,7 @@ interface IProps {
   marginStyle: Record<string, number>;
 }
 
-const employees = [
-  {
-    employeeId: 11,
-    name: 'John',
-    managerId: 200,
-  },
-  {
-    employeeId: 50,
-    name: 'Todd',
-    managerId: 73,
-  },
-  {
-    employeeId: 150,
-    name: 'Alex',
-    managerId: 200,
-  },
-  {
-    employeeId: 73,
-    name: 'Sara',
-    managerId: 11,
-  },
-  {
-    employeeId: 200,
-    name: 'Alex',
-    managerId: 50,
-  },
-  {
-    employeeId: 100,
-    name: 'Alex',
-    managerId: 150,
-  },
-];
-
-export default function BarChartUI({
-  series,
-  height,
-  xAxis,
-  marginStyle,
-}: Partial<IProps>) {
+export default function BarChartUI({ marginStyle }: Partial<IProps>) {
   return (
     <BarChart
       series={[

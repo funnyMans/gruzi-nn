@@ -1,6 +1,6 @@
 const now = new Date();
 
-export default [
+const events = [
   /* {
     id: 0,
     title: 'All Day Event very long title',
@@ -210,3 +210,5 @@ export default [
     end: new Date(2023, 2, 26, 4, 30, 0),
   },
 ];
+
+export default events;

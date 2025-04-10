@@ -8,8 +8,6 @@ import NextAuthClientProvider from '@/shared/providers/next-auth/ClientProvider'
 import LayoutProvider from '@/shared/ui/LayoutProvider';
 
 import './globals.css';
-import { ThemeProvider } from '@mui/material';
-import theme from './theme';
 
 export const metadata: Metadata = {
   title: 'Gruzi-NN',

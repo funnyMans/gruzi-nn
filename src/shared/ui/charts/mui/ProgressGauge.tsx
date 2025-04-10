@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Gauge,
-  gaugeClasses,
-  GaugeContainer,
-  GaugeReferenceArc,
-  GaugeValueArc,
-} from '@mui/x-charts/Gauge';
+import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
 export default function ProgressGauge() {
   return (

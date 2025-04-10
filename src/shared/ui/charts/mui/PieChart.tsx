@@ -1,5 +1,3 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
 
 const data = [

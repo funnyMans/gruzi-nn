@@ -1,4 +1,4 @@
-import { Box, Container, LinearProgress } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 import React, { lazy, Suspense } from 'react';
 
 const LazyReviewCard = lazy(() => import('@/shared/ui/cards/ReviewCard'));

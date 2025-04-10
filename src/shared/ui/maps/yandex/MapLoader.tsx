@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Image from 'next/image';
 
 import { LngLat } from '@yandex/ymaps3-types';
 

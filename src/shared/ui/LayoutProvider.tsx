@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode } from 'react';
 
-import { signIn, signOut, getSession, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { Authentication, type Branding, type Navigation } from '@toolpad/core';
 import { NextAppProvider } from '@toolpad/core/nextjs';
 
@@ -25,7 +25,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 // import LayoutStructure from './LayoutStructure';
 // import theme from '@/app/theme';
 import LayoutStructure from './LayoutStructure';
-import { ThemeProvider, useTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import theme from '@/app/theme';
 
 const NAVIGATION: Navigation = [
