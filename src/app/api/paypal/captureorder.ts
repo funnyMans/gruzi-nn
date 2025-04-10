@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 async function handler(req: NextRequest) {
   const reqBodyData = await req.json();
-  const { order_price, user_id } = reqBodyData;
+  const { order_price, user_id } = reqBodyData.body;
 
   if (req.method != 'POST')
     return NextResponse.json(

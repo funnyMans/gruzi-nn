@@ -28,10 +28,7 @@ const PaypalCheckoutForm = () => {
     });
   };
 
-  const onCreateOrder = (
-    data: CreateOrderData,
-    actions: CreateOrderActions
-  ) => {
+  const onCreateOrder = (_: CreateOrderData, actions: CreateOrderActions) => {
     return actions.order.create({
       purchase_units: [
         {
@@ -50,7 +47,7 @@ const PaypalCheckoutForm = () => {
     } as CreateOrderRequestBody);
   };
 
-  const onApproveOrder = (data: OnApproveData, actions: OnApproveActions) => {
+  const onApproveOrder = (_: OnApproveData, actions: OnApproveActions) => {
     return actions.order!.capture().then((details) => {
       const status = details.status;
       alert(`Transaction completed by ${status}`);
