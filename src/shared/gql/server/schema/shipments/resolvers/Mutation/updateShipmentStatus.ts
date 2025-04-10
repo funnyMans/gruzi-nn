@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
 export const updateShipmentStatus: NonNullable<
   MutationResolvers['updateShipmentStatus']
@@ -6,6 +7,8 @@ export const updateShipmentStatus: NonNullable<
   const { Shipment } = _ctx;
 
   try {
+    await dbConnect();
+
     const updatedShipment = await Shipment.findByIdAndUpdate(
       shipmentId,
       { status }, // Only update the status

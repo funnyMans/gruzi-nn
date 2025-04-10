@@ -1,3 +1,4 @@
+import dbConnect from '@/shared/lib/mongo/db';
 import type { QueryResolvers } from './../../../types.generated';
 export const driver: NonNullable<QueryResolvers['driver']> = async (
   _parent,
@@ -7,6 +8,8 @@ export const driver: NonNullable<QueryResolvers['driver']> = async (
   const { driverId } = _arg;
   const { Driver } = _ctx;
   try {
+    await dbConnect();
+
     const broker = await Driver.findById(driverId);
     if (!broker) {
       throw new Error(`Driver with id ${driverId} not found`);
