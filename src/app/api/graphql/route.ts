@@ -1,5 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { resolvers } from '@/shared/gql/server/schema/resolvers.generated';
 import { typeDefs } from '@/shared/gql/server/schema/typeDefs.generated';
@@ -16,11 +17,9 @@ const server = new ApolloServer({
   introspection: true, // 👈 Allows schema exploration in production
   // 👇 Enables Apollo Sandbox even in production
   plugins: [
-    require('@apollo/server/plugin/landingPage/default').ApolloServerPluginLandingPageLocalDefault(
-      {
-        embed: true,
-      }
-    ),
+    ApolloServerPluginLandingPageLocalDefault({
+      embed: true,
+    }),
   ],
 });
 
