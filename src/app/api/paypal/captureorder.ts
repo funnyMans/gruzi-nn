@@ -18,7 +18,6 @@ async function handler(req: NextApiRequest) {
     );
 
   try {
-    // const exampleController = new ExampleController(client);
     // const response = exampleController.getExampleType(body);
     // console.log('Success! Result:', response.result);
     // console.log('Status Code:', response.statusCode);

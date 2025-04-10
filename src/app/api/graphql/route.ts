@@ -1,4 +1,3 @@
-import { NextApiRequest } from 'next';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import dbConnect from '@/shared/lib/mongo/db';

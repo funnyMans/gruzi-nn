@@ -17,6 +17,7 @@ const eslintConfig = [
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Warn for unused variables, ignore those starting with "_"
       '@typescript-eslint/no-empty-interface': 'off', // Allow empty interfaces
       '@typescript-eslint/no-empty-object-type': 'off',
+      'react/no-unescaped-entities': 0, // Allow unescaped entities in JSX
     },
   },
 ];
