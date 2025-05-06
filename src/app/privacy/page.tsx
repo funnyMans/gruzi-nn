@@ -7,6 +7,7 @@ import { GET_PRIVACY_POLICY } from '@/shared/gql/client/privacy/privacyQueries';
 import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
 import config from '@/shared/lib/config';
 import { Typography } from '@mui/material';
+import { createFeatureGate } from '@/shared/lib/flags/flags';
 
 const PrivacyPolicyPage = async () => {
   const res = await query<
@@ -21,8 +22,13 @@ const PrivacyPolicyPage = async () => {
 
   const privacy = res.data.privacyPolicy!;
 
+  const flagsEnabled = await createFeatureGate('my_first_gate')();
+
   return (
     <div>
+      <Typography>
+        {flagsEnabled ? 'flags enabled' : 'flags are not available'}
+      </Typography>
       <Typography>{privacy.id}</Typography>
       <Typography>{privacy.introduction}</Typography>
       {privacy.sections.map((section) => (
