@@ -7,9 +7,7 @@ interface IProps {
 const LayoutStructure = ({ children }: IProps) => {
   return (
     <DashboardLayout>
-      <PageContainer maxWidth={'xl'} sx={{ padding: 1 }}>
-        {children}
-      </PageContainer>
+      <PageContainer maxWidth={'xl'}>{children}</PageContainer>
     </DashboardLayout>
   );
 };

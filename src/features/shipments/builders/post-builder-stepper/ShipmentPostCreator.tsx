@@ -32,16 +32,6 @@ const ShipmentPostCreator = () => {
       content: <>"Viko"</>,
       icon: <SettingsIcon />,
     },
-    {
-      label: 'Ziko',
-      content: <>"Ziko"</>,
-      icon: <SettingsIcon />,
-    },
-    {
-      label: 'Cisco',
-      content: <>"Cisco"</>,
-      icon: <SettingsIcon />,
-    },
   ];
 
   return (

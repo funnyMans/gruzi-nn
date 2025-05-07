@@ -42,8 +42,8 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
         minHeight: 'fit-content',
       }}
     >
-      <CardContent sx={{ pr: 2, display: 'flex', flex: 1 }}>
-        <Container aria-label='cargo-general'>
+      <CardContent sx={{ display: 'flex', flex: 1, flexWrap: 'wrap' }}>
+        <Container aria-label='cargo-general' sx={{ padding: 1 }}>
           <Box mb={1}>
             <Box>
               <Typography>{pickupLocation.city}</Typography>
@@ -112,7 +112,7 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
             </Box>
           </Box>
         </Container>
-        <Container aria-label='cargo-details'>
+        <Container aria-label='cargo-details' sx={{ padding: 1 }}>
           <Box>
             <Typography whiteSpace={'balance'} noWrap>
               Category: {cargoCategory}
@@ -129,19 +129,12 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
             <Typography>Is hazardous: {isHazardous ? 'Yes' : 'No'}</Typography>
           </Box>
         </Container>
-        <GoogleMap directions={{ pickupLocation, deliveryLocation }} />
+        <Container aria-label='map' maxWidth='xs'>
+          <Box display={'flex'} justifyContent={'center'}>
+            <GoogleMap directions={{ pickupLocation, deliveryLocation }} />
+          </Box>
+        </Container>
       </CardContent>
-      {/* <div>
-        <Image
-          src={
-            'https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
-          }
-          width={200}
-          height={100}
-          priority
-          alt='map'
-        />
-      </div> */}
     </Card>
   );
 };
