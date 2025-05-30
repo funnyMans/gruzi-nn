@@ -94,6 +94,7 @@ enum CargoCategory {
 
 input CreateShipmentInput {
   brokerId: ID!
+  carrierId: ID
   truckId: ID
   driverId: ID
   cargoDetails: CargoDetailsInput!

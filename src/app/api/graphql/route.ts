@@ -10,6 +10,8 @@ import Driver from '@/shared/lib/mongo/models/Driver';
 import Truck from '@/shared/lib/mongo/models/Truck';
 import TermsOfUse from '@/shared/lib/mongo/models/TermsOfUse';
 import PrivacyPolicy from '@/shared/lib/mongo/models/PrivacyPolicy';
+import Carrier from '@/shared/lib/mongo/models/Carrier';
+import FAQ from '@/shared/lib/mongo/models/FAQ';
 
 const server = new ApolloServer({
   resolvers,
@@ -27,10 +29,12 @@ const handler = startServerAndCreateNextHandler<any, any>(server, {
   context: async () => ({
     Shipment,
     Broker,
+    Carrier,
     Driver,
     Truck,
     TermsOfUse,
     PrivacyPolicy,
+    FAQ,
   }),
 });
 

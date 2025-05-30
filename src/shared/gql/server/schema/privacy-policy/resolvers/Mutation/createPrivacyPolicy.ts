@@ -1,5 +1,6 @@
 import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
+
 export const createPrivacyPolicy: NonNullable<
   MutationResolvers['createPrivacyPolicy']
 > = async (_parent, _arg, _ctx) => {
@@ -16,7 +17,7 @@ export const createPrivacyPolicy: NonNullable<
     });
 
     // Save the new Terms of Use document to the database
-    const savedPrivacyPolicy = await newPrivacyPolicy.save();
+    const savedPrivacyPolicy = await newPrivacyPolicy.save(newPrivacyPolicy);
 
     // Return the saved Terms of Use document
     return savedPrivacyPolicy;

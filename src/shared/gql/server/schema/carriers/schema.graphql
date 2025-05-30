@@ -1,0 +1,48 @@
+extend type Query {
+  carrier(carrierId: ID!): Carrier
+  carriers: [Carrier!]!
+}
+
+extend type Mutation {
+  createCarrier(input: CreateCarrierInput!): Carrier
+  updateCarrier(input: UpdateCarrierInput!): Carrier
+}
+
+type Carrier {
+  carrierId: ID!
+  name: String!
+  companyId: String!
+  legalForm: String
+  contact: Contact!
+  address: Address!
+  verified: Boolean
+  rating: Float
+  driverIDs: [ID!]!
+  truckIDs: [ID!]!
+}
+
+input CreateCarrierInput {
+  carrierId: ID!
+  name: String!
+  companyId: String!
+  legalForm: String
+  contact: ContactInput!
+  address: AddressInput!
+  verified: Boolean
+  rating: Float
+  driverIDs: [ID!]!
+  truckIDs: [ID!]!
+}
+
+input UpdateCarrierInput {
+  carrierId: ID!
+  name: String!
+  companyId: String!
+  legalForm: String
+  contact: ContactInput!
+  address: AddressInput!
+  verified: Boolean
+  rating: Float
+  driverIDs: [ID!]!
+  truckIDs: [ID!]!
+}

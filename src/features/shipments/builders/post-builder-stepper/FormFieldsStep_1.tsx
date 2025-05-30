@@ -1,6 +1,6 @@
 'use client';
 import FormLabel from '@mui/material/FormLabel';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { Box, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { Currency } from '@/shared/gql/client/__generated__/graphql';

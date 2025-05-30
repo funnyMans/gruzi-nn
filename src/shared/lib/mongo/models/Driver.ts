@@ -8,7 +8,7 @@ const DriverSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     email: { type: String, required: true },
   },
-  assignedTruckId: { type: mongoose.Schema.Types.ObjectId, ref: 'Truck' },
+  carrierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Carrier' },
   status: {
     type: String,
     enum: ['On Duty', 'Off Duty', 'On Leave'],

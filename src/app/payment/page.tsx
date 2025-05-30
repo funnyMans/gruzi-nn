@@ -1,18 +1,33 @@
+'use client';
+
 import PaypalScript from '@/features/payment/paypal/PaypalScript';
 import { CheckoutForm } from '@/features/payment/stripe/CheckoutForm';
 
+import { Container, Paper, Box, Typography, Divider } from '@mui/material';
+
 const CheckoutPage = () => {
-  // Here you would be getting the basked etc.
-  // We're hard-coding the oruce for simplicity
   const priceId = 'price_1RA6QRFjM1oEhuKJIQINO82a';
 
   return (
-    <main>
-      <div className='max-w-screen-lg mx-auto my-8'>
-        <CheckoutForm priceId={priceId} />
-        <PaypalScript />
-      </div>
-    </main>
+    <Container maxWidth='md' sx={{ py: 8 }}>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+        <Box sx={{ mb: 5 }}>
+          <Typography variant='h6' gutterBottom>
+            Pay with Card
+          </Typography>
+          <CheckoutForm priceId={priceId} />
+        </Box>
+
+        <Divider sx={{ my: 4 }} />
+
+        <Box>
+          <Typography variant='h6' gutterBottom>
+            Or Pay with PayPal
+          </Typography>
+          <PaypalScript />
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

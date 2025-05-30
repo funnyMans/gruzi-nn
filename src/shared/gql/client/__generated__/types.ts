@@ -76,6 +76,20 @@ export type CargoDetailsInput = {
   weight: Scalars['Float']['input'];
 };
 
+export type Carrier = {
+  __typename?: 'Carrier';
+  address: Address;
+  carrierId: Scalars['ID']['output'];
+  companyId: Scalars['String']['output'];
+  contact: Contact;
+  driverIDs: Array<Scalars['ID']['output']>;
+  legalForm?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  rating?: Maybe<Scalars['Float']['output']>;
+  truckIDs: Array<Scalars['ID']['output']>;
+  verified?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Contact = {
   __typename?: 'Contact';
   email: Scalars['String']['output'];
@@ -118,9 +132,23 @@ export type CreateBrokerInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateCarrierInput = {
+  address: AddressInput;
+  carrierId: Scalars['ID']['input'];
+  companyId: Scalars['String']['input'];
+  contact: ContactInput;
+  driverIDs: Array<Scalars['ID']['input']>;
+  legalForm?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  rating?: InputMaybe<Scalars['Float']['input']>;
+  truckIDs: Array<Scalars['ID']['input']>;
+  verified?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type CreateShipmentInput = {
   brokerId: Scalars['ID']['input'];
   cargoDetails: CargoDetailsInput;
+  carrierId?: InputMaybe<Scalars['ID']['input']>;
   deliveryLocation: LocationInput;
   driverId?: InputMaybe<Scalars['ID']['input']>;
   pickupLocation: LocationInput;
@@ -150,10 +178,24 @@ export type DimensionsInput = {
 
 export type Driver = {
   __typename?: 'Driver';
+  carrierId: Scalars['ID']['output'];
   contact: Contact;
   driverId: Scalars['ID']['output'];
   licenseNumber: Scalars['String']['output'];
   name: Scalars['String']['output'];
+};
+
+export type Faq = {
+  __typename?: 'FAQ';
+  answer: Scalars['String']['output'];
+  audience?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  question: Scalars['String']['output'];
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type General = {
@@ -199,10 +241,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   addTrackingUpdate: Shipment;
   createBroker?: Maybe<Broker>;
+  createCarrier?: Maybe<Carrier>;
   createPrivacyPolicy?: Maybe<PrivacyPolicy>;
   createShipment: Shipment;
   createTermsOfUse?: Maybe<TermsOfUse>;
   updateBroker?: Maybe<Broker>;
+  updateCarrier?: Maybe<Carrier>;
   updatePrivacyPolicy?: Maybe<PrivacyPolicy>;
   updateShipmentStatus: Shipment;
   updateTermsOfUse?: Maybe<TermsOfUse>;
@@ -217,6 +261,11 @@ export type MutationAddTrackingUpdateArgs = {
 
 export type MutationCreateBrokerArgs = {
   input: CreateBrokerInput;
+};
+
+
+export type MutationCreateCarrierArgs = {
+  input: CreateCarrierInput;
 };
 
 
@@ -240,6 +289,11 @@ export type MutationCreateTermsOfUseArgs = {
 
 export type MutationUpdateBrokerArgs = {
   input: UpdateBrokerInput;
+};
+
+
+export type MutationUpdateCarrierArgs = {
+  input: UpdateCarrierInput;
 };
 
 
@@ -287,8 +341,11 @@ export type Query = {
   __typename?: 'Query';
   broker?: Maybe<Broker>;
   brokers: Array<Maybe<Broker>>;
+  carrier?: Maybe<Carrier>;
+  carriers: Array<Carrier>;
   driver?: Maybe<Driver>;
   drivers: Array<Driver>;
+  faqs?: Maybe<Array<Maybe<Faq>>>;
   privacyPolicy?: Maybe<PrivacyPolicy>;
   shipment?: Maybe<Shipment>;
   shipments: Array<Shipment>;
@@ -303,8 +360,20 @@ export type QueryBrokerArgs = {
 };
 
 
+export type QueryCarrierArgs = {
+  carrierId: Scalars['ID']['input'];
+};
+
+
 export type QueryDriverArgs = {
   driverId: Scalars['ID']['input'];
+};
+
+
+export type QueryFaqsArgs = {
+  audience?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -413,6 +482,7 @@ export type TrackingUpdateInput = {
 export type Truck = {
   __typename?: 'Truck';
   capacity: Scalars['Float']['output'];
+  carrierId: Scalars['ID']['output'];
   licensePlate: Scalars['String']['output'];
   model: Scalars['String']['output'];
   truckId: Scalars['ID']['output'];
@@ -424,6 +494,19 @@ export type UpdateBrokerInput = {
   contact?: InputMaybe<ContactInput>;
   licenseNumber?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCarrierInput = {
+  address: AddressInput;
+  carrierId: Scalars['ID']['input'];
+  companyId: Scalars['String']['input'];
+  contact: ContactInput;
+  driverIDs: Array<Scalars['ID']['input']>;
+  legalForm?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  rating?: InputMaybe<Scalars['Float']['input']>;
+  truckIDs: Array<Scalars['ID']['input']>;
+  verified?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type CreateBrokerMutationVariables = Exact<{
@@ -452,12 +535,40 @@ export type GetAllBrokersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllBrokersQuery = { __typename?: 'Query', brokers: Array<{ __typename?: 'Broker', brokerId: string, name: string, licenseNumber: string, contact: { __typename?: 'Contact', phone: string, email: string } } | null> };
 
-export type GetTruckQueryVariables = Exact<{
-  truckId: Scalars['ID']['input'];
+export type CreateCarrierMutationVariables = Exact<{
+  input: CreateCarrierInput;
 }>;
 
 
-export type GetTruckQuery = { __typename?: 'Query', truck?: { __typename?: 'Truck', truckId: string, capacity: number, licensePlate: string, model: string } | null };
+export type CreateCarrierMutation = { __typename?: 'Mutation', createCarrier?: { __typename?: 'Carrier', carrierId: string, name: string, companyId: string, legalForm?: string | null, verified?: boolean | null, rating?: number | null, contact: { __typename?: 'Contact', phone: string, email: string }, address: { __typename?: 'Address', street: string, city: string, state: string, zip: string } } | null };
+
+export type UpdateCarrierMutationVariables = Exact<{
+  input: UpdateCarrierInput;
+}>;
+
+
+export type UpdateCarrierMutation = { __typename?: 'Mutation', updateCarrier?: { __typename?: 'Carrier', carrierId: string, name: string, companyId: string, legalForm?: string | null, verified?: boolean | null, rating?: number | null, contact: { __typename?: 'Contact', phone: string, email: string }, address: { __typename?: 'Address', street: string, city: string, state: string, zip: string } } | null };
+
+export type GetCarrierByIdQueryVariables = Exact<{
+  carrierId: Scalars['ID']['input'];
+}>;
+
+
+export type GetCarrierByIdQuery = { __typename?: 'Query', carrier?: { __typename?: 'Carrier', carrierId: string, name: string, companyId: string, legalForm?: string | null, verified?: boolean | null, rating?: number | null, driverIDs: Array<string>, truckIDs: Array<string>, contact: { __typename?: 'Contact', phone: string, email: string }, address: { __typename?: 'Address', street: string, city: string, state: string, zip: string } } | null };
+
+export type GetAllCarriersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCarriersQuery = { __typename?: 'Query', carriers: Array<{ __typename?: 'Carrier', carrierId: string, name: string, companyId: string, verified?: boolean | null, rating?: number | null }> };
+
+export type GetFaQsQueryVariables = Exact<{
+  audience?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetFaQsQuery = { __typename?: 'Query', faqs?: Array<{ __typename?: 'FAQ', id: string, question: string, answer: string, category?: string | null, audience?: string | null, isActive?: boolean | null } | null> | null };
 
 export type CreatePrivacyPolicyMutationVariables = Exact<{
   lastUpdated: Scalars['String']['input'];
@@ -739,49 +850,249 @@ export type GetAllBrokersQueryHookResult = ReturnType<typeof useGetAllBrokersQue
 export type GetAllBrokersLazyQueryHookResult = ReturnType<typeof useGetAllBrokersLazyQuery>;
 export type GetAllBrokersSuspenseQueryHookResult = ReturnType<typeof useGetAllBrokersSuspenseQuery>;
 export type GetAllBrokersQueryResult = Apollo.QueryResult<GetAllBrokersQuery, GetAllBrokersQueryVariables>;
-export const GetTruckDocument = gql`
-    query GetTruck($truckId: ID!) {
-  truck(truckId: $truckId) {
-    truckId
-    capacity
-    licensePlate
-    model
+export const CreateCarrierDocument = gql`
+    mutation CreateCarrier($input: CreateCarrierInput!) {
+  createCarrier(input: $input) {
+    carrierId
+    name
+    companyId
+    legalForm
+    contact {
+      phone
+      email
+    }
+    address {
+      street
+      city
+      state
+      zip
+    }
+    verified
+    rating
+  }
+}
+    `;
+export type CreateCarrierMutationFn = Apollo.MutationFunction<CreateCarrierMutation, CreateCarrierMutationVariables>;
+
+/**
+ * __useCreateCarrierMutation__
+ *
+ * To run a mutation, you first call `useCreateCarrierMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCarrierMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCarrierMutation, { data, loading, error }] = useCreateCarrierMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCarrierMutation(baseOptions?: Apollo.MutationHookOptions<CreateCarrierMutation, CreateCarrierMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCarrierMutation, CreateCarrierMutationVariables>(CreateCarrierDocument, options);
+      }
+export type CreateCarrierMutationHookResult = ReturnType<typeof useCreateCarrierMutation>;
+export type CreateCarrierMutationResult = Apollo.MutationResult<CreateCarrierMutation>;
+export type CreateCarrierMutationOptions = Apollo.BaseMutationOptions<CreateCarrierMutation, CreateCarrierMutationVariables>;
+export const UpdateCarrierDocument = gql`
+    mutation UpdateCarrier($input: UpdateCarrierInput!) {
+  updateCarrier(input: $input) {
+    carrierId
+    name
+    companyId
+    legalForm
+    contact {
+      phone
+      email
+    }
+    address {
+      street
+      city
+      state
+      zip
+    }
+    verified
+    rating
+  }
+}
+    `;
+export type UpdateCarrierMutationFn = Apollo.MutationFunction<UpdateCarrierMutation, UpdateCarrierMutationVariables>;
+
+/**
+ * __useUpdateCarrierMutation__
+ *
+ * To run a mutation, you first call `useUpdateCarrierMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCarrierMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCarrierMutation, { data, loading, error }] = useUpdateCarrierMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCarrierMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCarrierMutation, UpdateCarrierMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCarrierMutation, UpdateCarrierMutationVariables>(UpdateCarrierDocument, options);
+      }
+export type UpdateCarrierMutationHookResult = ReturnType<typeof useUpdateCarrierMutation>;
+export type UpdateCarrierMutationResult = Apollo.MutationResult<UpdateCarrierMutation>;
+export type UpdateCarrierMutationOptions = Apollo.BaseMutationOptions<UpdateCarrierMutation, UpdateCarrierMutationVariables>;
+export const GetCarrierByIdDocument = gql`
+    query GetCarrierById($carrierId: ID!) {
+  carrier(carrierId: $carrierId) {
+    carrierId
+    name
+    companyId
+    legalForm
+    contact {
+      phone
+      email
+    }
+    address {
+      street
+      city
+      state
+      zip
+    }
+    verified
+    rating
+    driverIDs
+    truckIDs
   }
 }
     `;
 
 /**
- * __useGetTruckQuery__
+ * __useGetCarrierByIdQuery__
  *
- * To run a query within a React component, call `useGetTruckQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetTruckQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCarrierByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCarrierByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetTruckQuery({
+ * const { data, loading, error } = useGetCarrierByIdQuery({
  *   variables: {
- *      truckId: // value for 'truckId'
+ *      carrierId: // value for 'carrierId'
  *   },
  * });
  */
-export function useGetTruckQuery(baseOptions: Apollo.QueryHookOptions<GetTruckQuery, GetTruckQueryVariables> & ({ variables: GetTruckQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetCarrierByIdQuery(baseOptions: Apollo.QueryHookOptions<GetCarrierByIdQuery, GetCarrierByIdQueryVariables> & ({ variables: GetCarrierByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTruckQuery, GetTruckQueryVariables>(GetTruckDocument, options);
+        return Apollo.useQuery<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>(GetCarrierByIdDocument, options);
       }
-export function useGetTruckLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTruckQuery, GetTruckQueryVariables>) {
+export function useGetCarrierByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTruckQuery, GetTruckQueryVariables>(GetTruckDocument, options);
+          return Apollo.useLazyQuery<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>(GetCarrierByIdDocument, options);
         }
-export function useGetTruckSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTruckQuery, GetTruckQueryVariables>) {
+export function useGetCarrierByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetTruckQuery, GetTruckQueryVariables>(GetTruckDocument, options);
+          return Apollo.useSuspenseQuery<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>(GetCarrierByIdDocument, options);
         }
-export type GetTruckQueryHookResult = ReturnType<typeof useGetTruckQuery>;
-export type GetTruckLazyQueryHookResult = ReturnType<typeof useGetTruckLazyQuery>;
-export type GetTruckSuspenseQueryHookResult = ReturnType<typeof useGetTruckSuspenseQuery>;
-export type GetTruckQueryResult = Apollo.QueryResult<GetTruckQuery, GetTruckQueryVariables>;
+export type GetCarrierByIdQueryHookResult = ReturnType<typeof useGetCarrierByIdQuery>;
+export type GetCarrierByIdLazyQueryHookResult = ReturnType<typeof useGetCarrierByIdLazyQuery>;
+export type GetCarrierByIdSuspenseQueryHookResult = ReturnType<typeof useGetCarrierByIdSuspenseQuery>;
+export type GetCarrierByIdQueryResult = Apollo.QueryResult<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>;
+export const GetAllCarriersDocument = gql`
+    query GetAllCarriers {
+  carriers {
+    carrierId
+    name
+    companyId
+    verified
+    rating
+  }
+}
+    `;
+
+/**
+ * __useGetAllCarriersQuery__
+ *
+ * To run a query within a React component, call `useGetAllCarriersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCarriersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCarriersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllCarriersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCarriersQuery, GetAllCarriersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCarriersQuery, GetAllCarriersQueryVariables>(GetAllCarriersDocument, options);
+      }
+export function useGetAllCarriersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCarriersQuery, GetAllCarriersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCarriersQuery, GetAllCarriersQueryVariables>(GetAllCarriersDocument, options);
+        }
+export function useGetAllCarriersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllCarriersQuery, GetAllCarriersQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllCarriersQuery, GetAllCarriersQueryVariables>(GetAllCarriersDocument, options);
+        }
+export type GetAllCarriersQueryHookResult = ReturnType<typeof useGetAllCarriersQuery>;
+export type GetAllCarriersLazyQueryHookResult = ReturnType<typeof useGetAllCarriersLazyQuery>;
+export type GetAllCarriersSuspenseQueryHookResult = ReturnType<typeof useGetAllCarriersSuspenseQuery>;
+export type GetAllCarriersQueryResult = Apollo.QueryResult<GetAllCarriersQuery, GetAllCarriersQueryVariables>;
+export const GetFaQsDocument = gql`
+    query GetFAQs($audience: String, $category: String, $isActive: Boolean) {
+  faqs(audience: $audience, category: $category, isActive: $isActive) {
+    id
+    question
+    answer
+    category
+    audience
+    isActive
+  }
+}
+    `;
+
+/**
+ * __useGetFaQsQuery__
+ *
+ * To run a query within a React component, call `useGetFaQsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFaQsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFaQsQuery({
+ *   variables: {
+ *      audience: // value for 'audience'
+ *      category: // value for 'category'
+ *      isActive: // value for 'isActive'
+ *   },
+ * });
+ */
+export function useGetFaQsQuery(baseOptions?: Apollo.QueryHookOptions<GetFaQsQuery, GetFaQsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFaQsQuery, GetFaQsQueryVariables>(GetFaQsDocument, options);
+      }
+export function useGetFaQsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFaQsQuery, GetFaQsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFaQsQuery, GetFaQsQueryVariables>(GetFaQsDocument, options);
+        }
+export function useGetFaQsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetFaQsQuery, GetFaQsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFaQsQuery, GetFaQsQueryVariables>(GetFaQsDocument, options);
+        }
+export type GetFaQsQueryHookResult = ReturnType<typeof useGetFaQsQuery>;
+export type GetFaQsLazyQueryHookResult = ReturnType<typeof useGetFaQsLazyQuery>;
+export type GetFaQsSuspenseQueryHookResult = ReturnType<typeof useGetFaQsSuspenseQuery>;
+export type GetFaQsQueryResult = Apollo.QueryResult<GetFaQsQuery, GetFaQsQueryVariables>;
 export const CreatePrivacyPolicyDocument = gql`
     mutation CreatePrivacyPolicy($lastUpdated: String!, $introduction: String!, $sections: [PrivacyPolicySectionInput!]!) {
   createPrivacyPolicy(

@@ -1,5 +1,6 @@
 'use client';
 
+import config from '@/shared/lib/config';
 import { HttpLink } from '@apollo/client';
 import {
   ApolloNextAppProvider,
@@ -9,7 +10,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:3000/api/graphql',
+    uri: config.api.graphqlUrl,
   });
 
   return new ApolloClient({

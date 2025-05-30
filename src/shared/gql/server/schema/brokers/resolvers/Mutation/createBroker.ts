@@ -1,5 +1,6 @@
 import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
+
 export const createBroker: NonNullable<
   MutationResolvers['createBroker']
 > = async (_parent, _arg, _ctx) => {
@@ -8,8 +9,9 @@ export const createBroker: NonNullable<
   try {
     await dbConnect();
 
-    const shipment = await Broker.save(broker);
-    return shipment;
+    const newBroker = new Broker(broker);
+    const createdBroker = await Broker.save(newBroker);
+    return createdBroker;
   } catch (error: any) {
     throw new Error(error.message);
   } /* Implement Mutation.createBroker resolver logic here */

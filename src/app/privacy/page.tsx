@@ -3,14 +3,13 @@ import {
   GetPrivacyPolicyQueryVariables,
 } from '@/shared/gql/client/__generated__/graphql';
 import { GET_PRIVACY_POLICY } from '@/shared/gql/client/privacy/privacyQueries';
-
 import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
 import config from '@/shared/lib/config';
-import { Typography } from '@mui/material';
-import { createFeatureGate } from '@/shared/lib/flags/flags';
+import { Typography, Box, Container, Paper, Divider } from '@mui/material';
 
 const PrivacyPolicyPage = async () => {
-  const res = await query<
+  // Fetch the latest privacy policy data
+  const response = await query<
     GetPrivacyPolicyQuery,
     GetPrivacyPolicyQueryVariables
   >({
@@ -20,25 +19,44 @@ const PrivacyPolicyPage = async () => {
     },
   });
 
-  const privacy = res.data.privacyPolicy!;
-
-  const flagsEnabled = await createFeatureGate('my_first_gate')();
+  const privacyPolicy = response.data.privacyPolicy!;
 
   return (
-    <div>
-      <Typography>
-        {flagsEnabled ? 'flags enabled' : 'flags are not available'}
-      </Typography>
-      <Typography>{privacy.id}</Typography>
-      <Typography>{privacy.introduction}</Typography>
-      {privacy.sections.map((section) => (
-        <div key={section.title}>
-          <Typography>{section.title}</Typography>
-          <Typography>{section.content}</Typography>
-        </div>
-      ))}
-      <Typography></Typography>
-    </div>
+    <Container maxWidth='md' sx={{ paddingY: 4 }}>
+      <Paper elevation={3} sx={{ padding: 4 }}>
+        {/* Uncomment the following block if feature flags are needed */}
+        {/* <Typography align="center" color="textSecondary" gutterBottom>
+          {flagsEnabled ? 'Flags enabled' : 'Flags are not available'}
+        </Typography> */}
+
+        <Typography variant='h3' align='center' gutterBottom>
+          Privacy Policy
+        </Typography>
+        <Divider sx={{ marginY: 2 }} />
+        <Typography variant='subtitle1' color='textSecondary' gutterBottom>
+          {privacyPolicy.introduction}
+        </Typography>
+        <Divider sx={{ marginY: 3 }} />
+        {privacyPolicy.sections.map((section, index) => (
+          <Box
+            key={section.title}
+            sx={{
+              marginBottom: 4,
+              padding: 2,
+              backgroundColor: index % 2 === 0 ? 'grey.100' : 'white',
+              borderRadius: 2,
+            }}
+          >
+            <Typography variant='h5' gutterBottom>
+              {section.title}
+            </Typography>
+            <Typography variant='body1' color='textSecondary'>
+              {section.content}
+            </Typography>
+          </Box>
+        ))}
+      </Paper>
+    </Container>
   );
 };
 

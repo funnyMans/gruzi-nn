@@ -1,8 +1,9 @@
+import FadeInBox from '@/shared/animation/framer-motiion/FadeInBox';
 import {
   GetAllShipmentsQuery,
   GetAllShipmentsQueryVariables,
-} from '@/shared/gql/client/__generated__/graphql';
-import { GET_ALL_SHIPMENTS } from '@/shared/gql/client/shioment/shipmentQueries';
+} from '@/shared/gql/client/__generated__/types';
+import { GET_ALL_SHIPMENTS } from '@/shared/gql/client/shipment/shipmentQueries';
 import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
 import ShipmentViewCard from '@/shared/ui/cards/ShipmentViewCard';
 import { Box } from '@mui/material';
@@ -16,12 +17,13 @@ const ShipmentList = async () => {
   return shipments.length ? (
     <Box display={'flex'} flexDirection={'column'} gap={1}>
       {shipments.map((shipment) => (
-        <ShipmentViewCard
-          shipment={shipment}
-          applyBtnText={'accept'}
-          dismissBtnText={'dismiss'}
-          key={shipment.shipmentId}
-        />
+        <FadeInBox key={shipment.shipmentId}>
+          <ShipmentViewCard
+            shipment={shipment}
+            applyBtnText={'accept'}
+            dismissBtnText={'dismiss'}
+          />
+        </FadeInBox>
       ))}
     </Box>
   ) : (

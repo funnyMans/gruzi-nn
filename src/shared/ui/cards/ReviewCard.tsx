@@ -27,6 +27,7 @@ const ReviewCard = ({
         flexDirection: 'row-reverse',
         padding: 1,
         borderRadius: 5,
+        maxWidth: 'fit-content',
       }}
     >
       <Image

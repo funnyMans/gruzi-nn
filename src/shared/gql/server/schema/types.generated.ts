@@ -76,6 +76,20 @@ export type CargoDetailsInput = {
   weight: Scalars['Float']['input'];
 };
 
+export type Carrier = {
+  __typename?: 'Carrier';
+  address: Address;
+  carrierId: Scalars['ID']['output'];
+  companyId: Scalars['String']['output'];
+  contact: Contact;
+  driverIDs: Array<Scalars['ID']['output']>;
+  legalForm?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  rating?: Maybe<Scalars['Float']['output']>;
+  truckIDs: Array<Scalars['ID']['output']>;
+  verified?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Contact = {
   __typename?: 'Contact';
   email: Scalars['String']['output'];
@@ -118,9 +132,23 @@ export type CreateBrokerInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateCarrierInput = {
+  address: AddressInput;
+  carrierId: Scalars['ID']['input'];
+  companyId: Scalars['String']['input'];
+  contact: ContactInput;
+  driverIDs: Array<Scalars['ID']['input']>;
+  legalForm?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  rating?: InputMaybe<Scalars['Float']['input']>;
+  truckIDs: Array<Scalars['ID']['input']>;
+  verified?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type CreateShipmentInput = {
   brokerId: Scalars['ID']['input'];
   cargoDetails: CargoDetailsInput;
+  carrierId?: InputMaybe<Scalars['ID']['input']>;
   deliveryLocation: LocationInput;
   driverId?: InputMaybe<Scalars['ID']['input']>;
   pickupLocation: LocationInput;
@@ -149,10 +177,24 @@ export type DimensionsInput = {
 
 export type Driver = {
   __typename?: 'Driver';
+  carrierId: Scalars['ID']['output'];
   contact: Contact;
   driverId: Scalars['ID']['output'];
   licenseNumber: Scalars['String']['output'];
   name: Scalars['String']['output'];
+};
+
+export type FAQ = {
+  __typename?: 'FAQ';
+  answer: Scalars['String']['output'];
+  audience?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  question: Scalars['String']['output'];
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type General = {
@@ -198,10 +240,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   addTrackingUpdate: Shipment;
   createBroker?: Maybe<Broker>;
+  createCarrier?: Maybe<Carrier>;
   createPrivacyPolicy?: Maybe<PrivacyPolicy>;
   createShipment: Shipment;
   createTermsOfUse?: Maybe<TermsOfUse>;
   updateBroker?: Maybe<Broker>;
+  updateCarrier?: Maybe<Carrier>;
   updatePrivacyPolicy?: Maybe<PrivacyPolicy>;
   updateShipmentStatus: Shipment;
   updateTermsOfUse?: Maybe<TermsOfUse>;
@@ -216,6 +260,11 @@ export type MutationaddTrackingUpdateArgs = {
 
 export type MutationcreateBrokerArgs = {
   input: CreateBrokerInput;
+};
+
+
+export type MutationcreateCarrierArgs = {
+  input: CreateCarrierInput;
 };
 
 
@@ -239,6 +288,11 @@ export type MutationcreateTermsOfUseArgs = {
 
 export type MutationupdateBrokerArgs = {
   input: UpdateBrokerInput;
+};
+
+
+export type MutationupdateCarrierArgs = {
+  input: UpdateCarrierInput;
 };
 
 
@@ -286,8 +340,11 @@ export type Query = {
   __typename?: 'Query';
   broker?: Maybe<Broker>;
   brokers: Array<Maybe<Broker>>;
+  carrier?: Maybe<Carrier>;
+  carriers: Array<Carrier>;
   driver?: Maybe<Driver>;
   drivers: Array<Driver>;
+  faqs?: Maybe<Array<Maybe<FAQ>>>;
   privacyPolicy?: Maybe<PrivacyPolicy>;
   shipment?: Maybe<Shipment>;
   shipments: Array<Shipment>;
@@ -302,8 +359,20 @@ export type QuerybrokerArgs = {
 };
 
 
+export type QuerycarrierArgs = {
+  carrierId: Scalars['ID']['input'];
+};
+
+
 export type QuerydriverArgs = {
   driverId: Scalars['ID']['input'];
+};
+
+
+export type QueryfaqsArgs = {
+  audience?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -411,6 +480,7 @@ export type TrackingUpdateInput = {
 export type Truck = {
   __typename?: 'Truck';
   capacity: Scalars['Float']['output'];
+  carrierId: Scalars['ID']['output'];
   licensePlate: Scalars['String']['output'];
   model: Scalars['String']['output'];
   truckId: Scalars['ID']['output'];
@@ -422,6 +492,19 @@ export type UpdateBrokerInput = {
   contact?: InputMaybe<ContactInput>;
   licenseNumber?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCarrierInput = {
+  address: AddressInput;
+  carrierId: Scalars['ID']['input'];
+  companyId: Scalars['String']['input'];
+  contact: ContactInput;
+  driverIDs: Array<Scalars['ID']['input']>;
+  legalForm?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  rating?: InputMaybe<Scalars['Float']['input']>;
+  truckIDs: Array<Scalars['ID']['input']>;
+  verified?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -505,6 +588,7 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CargoDetailsInput: CargoDetailsInput;
+  Carrier: ResolverTypeWrapper<Carrier>;
   Contact: ResolverTypeWrapper<Contact>;
   ContactInput: ContactInput;
   Content: ResolverTypeWrapper<Content>;
@@ -512,11 +596,13 @@ export type ResolversTypes = {
   Coordinates: ResolverTypeWrapper<Coordinates>;
   CoordinatesInput: CoordinatesInput;
   CreateBrokerInput: CreateBrokerInput;
+  CreateCarrierInput: CreateCarrierInput;
   CreateShipmentInput: CreateShipmentInput;
   Currency: ResolverTypeWrapper<'RUR' | 'USD' | 'EUR'>;
   Dimensions: ResolverTypeWrapper<Dimensions>;
   DimensionsInput: DimensionsInput;
   Driver: ResolverTypeWrapper<Driver>;
+  FAQ: ResolverTypeWrapper<FAQ>;
   General: ResolverTypeWrapper<General>;
   GeneralInput: GeneralInput;
   HazardousDetails: ResolverTypeWrapper<HazardousDetails>;
@@ -541,6 +627,7 @@ export type ResolversTypes = {
   TrackingUpdateInput: TrackingUpdateInput;
   Truck: ResolverTypeWrapper<Truck>;
   UpdateBrokerInput: UpdateBrokerInput;
+  UpdateCarrierInput: UpdateCarrierInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -554,6 +641,7 @@ export type ResolversParentTypes = {
   Float: Scalars['Float']['output'];
   Boolean: Scalars['Boolean']['output'];
   CargoDetailsInput: CargoDetailsInput;
+  Carrier: Carrier;
   Contact: Contact;
   ContactInput: ContactInput;
   Content: Content;
@@ -561,10 +649,12 @@ export type ResolversParentTypes = {
   Coordinates: Coordinates;
   CoordinatesInput: CoordinatesInput;
   CreateBrokerInput: CreateBrokerInput;
+  CreateCarrierInput: CreateCarrierInput;
   CreateShipmentInput: CreateShipmentInput;
   Dimensions: Dimensions;
   DimensionsInput: DimensionsInput;
   Driver: Driver;
+  FAQ: FAQ;
   General: General;
   GeneralInput: GeneralInput;
   HazardousDetails: HazardousDetails;
@@ -588,6 +678,7 @@ export type ResolversParentTypes = {
   TrackingUpdateInput: TrackingUpdateInput;
   Truck: Truck;
   UpdateBrokerInput: UpdateBrokerInput;
+  UpdateCarrierInput: UpdateCarrierInput;
 };
 
 export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
@@ -624,6 +715,20 @@ export type CargoDetailsResolvers<ContextType = any, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CarrierResolvers<ContextType = any, ParentType extends ResolversParentTypes['Carrier'] = ResolversParentTypes['Carrier']> = {
+  address?: Resolver<ResolversTypes['Address'], ParentType, ContextType>;
+  carrierId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  companyId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  contact?: Resolver<ResolversTypes['Contact'], ParentType, ContextType>;
+  driverIDs?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType>;
+  legalForm?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  rating?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  truckIDs?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType>;
+  verified?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['Contact'] = ResolversParentTypes['Contact']> = {
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   phone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -652,10 +757,24 @@ export type DimensionsResolvers<ContextType = any, ParentType extends ResolversP
 };
 
 export type DriverResolvers<ContextType = any, ParentType extends ResolversParentTypes['Driver'] = ResolversParentTypes['Driver']> = {
+  carrierId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   contact?: Resolver<ResolversTypes['Contact'], ParentType, ContextType>;
   driverId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   licenseNumber?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FAQResolvers<ContextType = any, ParentType extends ResolversParentTypes['FAQ'] = ResolversParentTypes['FAQ']> = {
+  answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  audience?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  question?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -683,10 +802,12 @@ export type LocationResolvers<ContextType = any, ParentType extends ResolversPar
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addTrackingUpdate?: Resolver<ResolversTypes['Shipment'], ParentType, ContextType, RequireFields<MutationaddTrackingUpdateArgs, 'input' | 'shipmentId'>>;
   createBroker?: Resolver<Maybe<ResolversTypes['Broker']>, ParentType, ContextType, RequireFields<MutationcreateBrokerArgs, 'input'>>;
+  createCarrier?: Resolver<Maybe<ResolversTypes['Carrier']>, ParentType, ContextType, RequireFields<MutationcreateCarrierArgs, 'input'>>;
   createPrivacyPolicy?: Resolver<Maybe<ResolversTypes['PrivacyPolicy']>, ParentType, ContextType, RequireFields<MutationcreatePrivacyPolicyArgs, 'introduction' | 'lastUpdated' | 'sections'>>;
   createShipment?: Resolver<ResolversTypes['Shipment'], ParentType, ContextType, RequireFields<MutationcreateShipmentArgs, 'input'>>;
   createTermsOfUse?: Resolver<Maybe<ResolversTypes['TermsOfUse']>, ParentType, ContextType, RequireFields<MutationcreateTermsOfUseArgs, 'effectiveDate' | 'terms'>>;
   updateBroker?: Resolver<Maybe<ResolversTypes['Broker']>, ParentType, ContextType, RequireFields<MutationupdateBrokerArgs, 'input'>>;
+  updateCarrier?: Resolver<Maybe<ResolversTypes['Carrier']>, ParentType, ContextType, RequireFields<MutationupdateCarrierArgs, 'input'>>;
   updatePrivacyPolicy?: Resolver<Maybe<ResolversTypes['PrivacyPolicy']>, ParentType, ContextType, RequireFields<MutationupdatePrivacyPolicyArgs, 'id' | 'introduction' | 'lastUpdated' | 'sections'>>;
   updateShipmentStatus?: Resolver<ResolversTypes['Shipment'], ParentType, ContextType, RequireFields<MutationupdateShipmentStatusArgs, 'shipmentId' | 'status'>>;
   updateTermsOfUse?: Resolver<Maybe<ResolversTypes['TermsOfUse']>, ParentType, ContextType, RequireFields<MutationupdateTermsOfUseArgs, 'id' | 'terms'>>;
@@ -711,8 +832,11 @@ export type PrivacyPolicySectionResolvers<ContextType = any, ParentType extends 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   broker?: Resolver<Maybe<ResolversTypes['Broker']>, ParentType, ContextType, RequireFields<QuerybrokerArgs, 'brokerId'>>;
   brokers?: Resolver<Array<Maybe<ResolversTypes['Broker']>>, ParentType, ContextType>;
+  carrier?: Resolver<Maybe<ResolversTypes['Carrier']>, ParentType, ContextType, RequireFields<QuerycarrierArgs, 'carrierId'>>;
+  carriers?: Resolver<Array<ResolversTypes['Carrier']>, ParentType, ContextType>;
   driver?: Resolver<Maybe<ResolversTypes['Driver']>, ParentType, ContextType, RequireFields<QuerydriverArgs, 'driverId'>>;
   drivers?: Resolver<Array<ResolversTypes['Driver']>, ParentType, ContextType>;
+  faqs?: Resolver<Maybe<Array<Maybe<ResolversTypes['FAQ']>>>, ParentType, ContextType, Partial<QueryfaqsArgs>>;
   privacyPolicy?: Resolver<Maybe<ResolversTypes['PrivacyPolicy']>, ParentType, ContextType, RequireFields<QueryprivacyPolicyArgs, 'id'>>;
   shipment?: Resolver<Maybe<ResolversTypes['Shipment']>, ParentType, ContextType, RequireFields<QueryshipmentArgs, 'shipmentId'>>;
   shipments?: Resolver<Array<ResolversTypes['Shipment']>, ParentType, ContextType, Partial<QueryshipmentsArgs>>;
@@ -774,6 +898,7 @@ export type TrackingUpdateResolvers<ContextType = any, ParentType extends Resolv
 
 export type TruckResolvers<ContextType = any, ParentType extends ResolversParentTypes['Truck'] = ResolversParentTypes['Truck']> = {
   capacity?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  carrierId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   licensePlate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   model?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   truckId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -785,12 +910,14 @@ export type Resolvers<ContextType = any> = {
   Broker?: BrokerResolvers<ContextType>;
   CargoCategory?: CargoCategoryResolvers;
   CargoDetails?: CargoDetailsResolvers<ContextType>;
+  Carrier?: CarrierResolvers<ContextType>;
   Contact?: ContactResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   Coordinates?: CoordinatesResolvers<ContextType>;
   Currency?: CurrencyResolvers;
   Dimensions?: DimensionsResolvers<ContextType>;
   Driver?: DriverResolvers<ContextType>;
+  FAQ?: FAQResolvers<ContextType>;
   General?: GeneralResolvers<ContextType>;
   HazardousDetails?: HazardousDetailsResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;

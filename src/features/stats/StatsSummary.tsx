@@ -5,7 +5,13 @@ const LazyReviewCard = lazy(() => import('@/shared/ui/cards/ReviewCard'));
 const StatsSummary = () => {
   return (
     <Suspense fallback={<LinearProgress />}>
-      <Box display={'flex'} justifyContent={'space-evenly'} padding={2}>
+      <Box
+        padding={2}
+        display={'flex'}
+        flexWrap={'wrap-reverse'}
+        justifyContent={'space-evenly'}
+        gap={2}
+      >
         {[1, 2, 3].map((item) => (
           <LazyReviewCard
             title={'gago ghjgg '}

@@ -7,6 +7,11 @@ const ShipmentSchema = new mongoose.Schema({
     ref: 'Broker',
     required: true,
   },
+  carrierId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Carrier',
+    required: true,
+  },
   truckId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Truck',

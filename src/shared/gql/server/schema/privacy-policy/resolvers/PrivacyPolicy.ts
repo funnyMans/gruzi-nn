@@ -1,4 +1,5 @@
 import type { PrivacyPolicyResolvers } from './../../types.generated';
+
 export const PrivacyPolicy: PrivacyPolicyResolvers = {
   id: (policy) => policy.id,
   introduction: (policy) => policy.introduction,

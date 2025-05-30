@@ -1,0 +1,16 @@
+# Root Query Type
+extend type Query {
+  faqs(audience: String, category: String, isActive: Boolean): [FAQ]
+}
+
+type FAQ {
+  id: ID!
+  question: String!
+  answer: String!
+  category: String
+  tags: [String]
+  audience: String
+  isActive: Boolean
+  createdAt: String
+  updatedAt: String
+}

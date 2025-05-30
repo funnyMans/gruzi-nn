@@ -2,8 +2,10 @@ extend type Query {
   truck(truckId: ID!): Truck
   trucks: [Truck]!
 }
+
 type Truck {
   truckId: ID!
+  carrierId: ID!
   licensePlate: String!
   model: String!
   capacity: Float!

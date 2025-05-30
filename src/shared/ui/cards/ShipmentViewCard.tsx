@@ -42,8 +42,15 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
         minHeight: 'fit-content',
       }}
     >
-      <CardContent sx={{ display: 'flex', flex: 1, flexWrap: 'wrap' }}>
-        <Container aria-label='cargo-general' sx={{ padding: 1 }}>
+      <CardContent
+        sx={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: { xs: 'column', lg: 'row' },
+          // justifyContent: 'space-between',
+        }}
+      >
+        <Container aria-label='cargo-general' maxWidth='md' sx={{ padding: 1 }}>
           <Box mb={1}>
             <Box>
               <Typography>{pickupLocation.city}</Typography>
@@ -112,7 +119,7 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
             </Box>
           </Box>
         </Container>
-        <Container aria-label='cargo-details' sx={{ padding: 1 }}>
+        <Container aria-label='cargo-details'>
           <Box>
             <Typography whiteSpace={'balance'} noWrap>
               Category: {cargoCategory}
@@ -130,7 +137,7 @@ const ShipmentViewCard = ({ shipment, applyBtnText }: Partial<IProps>) => {
           </Box>
         </Container>
         <Container aria-label='map' maxWidth='xs'>
-          <Box display={'flex'} justifyContent={'center'}>
+          <Box display={{ xs: 'none', md: 'flex' }} justifyContent={'center'}>
             <GoogleMap directions={{ pickupLocation, deliveryLocation }} />
           </Box>
         </Container>

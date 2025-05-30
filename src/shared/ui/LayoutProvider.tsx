@@ -64,23 +64,6 @@ const NAVIGATION: Navigation = [
     segment: 'stats',
     title: 'Statistics',
     icon: <InsightsIcon />,
-    children: [
-      {
-        segment: 'posted',
-        title: 'Posted',
-        icon: <WorkHistoryIcon />,
-      },
-      {
-        segment: 'transit',
-        title: 'Transit',
-        icon: <CachedIcon />,
-      },
-      {
-        segment: 'delivered',
-        title: 'Delivered',
-        icon: <CheckCircleOutlineIcon />,
-      },
-    ],
   },
   {
     segment: 'calendar',
@@ -98,23 +81,6 @@ const NAVIGATION: Navigation = [
     segment: 'profile',
     title: 'Profile',
     icon: <AssignmentIndIcon />,
-    children: [
-      {
-        segment: 'posted',
-        title: 'Posted',
-        icon: <WorkHistoryIcon />,
-      },
-      {
-        segment: 'transit',
-        title: 'Transit',
-        icon: <CachedIcon />,
-      },
-      {
-        segment: 'delivered',
-        title: 'Delivered',
-        icon: <CheckCircleOutlineIcon />,
-      },
-    ],
   },
   {
     segment: 'payment',

@@ -12,8 +12,17 @@ const authOptions: AuthOptions = {
   callbacks: {
     async session({ session, token }) {
       const user = session.user as any;
-      user.id = token.sub; // Attach user ID
+      user.id = token.sub;
+      user.role = token.role; // Attach user ID
       return session;
+    },
+
+    async jwt({ token, user }) {
+      if (user) {
+        // Just assign a fixed role for now — no DB needed
+        token.role = 'user';
+      }
+      return token;
     },
   },
 };

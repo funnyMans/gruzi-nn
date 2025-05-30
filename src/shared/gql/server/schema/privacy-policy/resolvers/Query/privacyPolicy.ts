@@ -1,5 +1,6 @@
 import dbConnect from '@/shared/lib/mongo/db';
 import type { QueryResolvers } from '../../../types.generated';
+
 export const privacyPolicy: NonNullable<
   QueryResolvers['privacyPolicy']
 > = async (_parent, _arg, _ctx) => {

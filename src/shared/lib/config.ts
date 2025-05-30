@@ -1,4 +1,9 @@
 const config = {
+  api: {
+    baseUrl: process.env.NEXT_PUBLIC_API || 'http://localhost:3000/api',
+    graphqlUrl:
+      process.env.NEXT_PUBLIC_API_GQL || 'http://localhost:3000/api/graphql',
+  },
   stripe: {
     publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE as string,
     secretKey: process.env.NEXT_PUBLIC_STRIPE_KEY as string,
@@ -16,6 +21,9 @@ const config = {
   yandexMaps: {
     apiKey: process.env.NEXT_PUBLIC_YMAPS_API_KEY!,
   },
+  nextAuth: {
+    secret: process.env.NEXTAUTH_SECRET!,
+  },
   github: {
     clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID!,
     clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET!,
@@ -26,11 +34,21 @@ const config = {
   privacy: {
     latestPrivacyPolicy: process.env.NEXT_PUBLIC_LATEST_PRIVACY_POLICY!,
   },
+  flags: {
+    serverApiKey: process.env.GRUZI_STATSIG_SERVER_API_KEY!,
+    clientKey: process.env.STATSIG_CLIENT_KEY,
+  },
+  stream: {
+    apiKey: process.env.NEXT_PUBLIC_STREAM_API_KEY!,
+    secret: process.env.STREAM_SECRET!,
+  },
   environment: process.env.NODE_ENV!,
 };
 
 function validateConfig(config: any) {
   const requiredFields = [
+    'api.baseUrl',
+    'api.graphqlUrl',
     'stripe.publishableKey',
     'stripe.secretKey',
     'paypal.clientId',

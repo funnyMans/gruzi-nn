@@ -17,6 +17,7 @@ const GoogleMap = ({ directions }: IProps) => {
     <Box width={300} height={200}>
       <Card>
         <GoogleMapsEmbed
+          allowfullscreen
           apiKey={GMapApiKey}
           height={200}
           width={300}

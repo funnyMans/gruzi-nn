@@ -1,5 +1,6 @@
 import dbConnect from '@/shared/lib/mongo/db';
 import type { MutationResolvers } from './../../../types.generated';
+
 export const updatePrivacyPolicy: NonNullable<
   MutationResolvers['updatePrivacyPolicy']
 > = async (_parent, _arg, _ctx) => {

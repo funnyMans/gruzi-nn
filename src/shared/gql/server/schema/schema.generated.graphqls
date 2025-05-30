@@ -54,6 +54,19 @@ input CargoDetailsInput {
   weight: Float!
 }
 
+type Carrier {
+  address: Address!
+  carrierId: ID!
+  companyId: String!
+  contact: Contact!
+  driverIDs: [ID!]!
+  legalForm: String
+  name: String!
+  rating: Float
+  truckIDs: [ID!]!
+  verified: Boolean
+}
+
 type Contact {
   email: String!
   phone: String!
@@ -93,9 +106,23 @@ input CreateBrokerInput {
   name: String!
 }
 
+input CreateCarrierInput {
+  address: AddressInput!
+  carrierId: ID!
+  companyId: String!
+  contact: ContactInput!
+  driverIDs: [ID!]!
+  legalForm: String
+  name: String!
+  rating: Float
+  truckIDs: [ID!]!
+  verified: Boolean
+}
+
 input CreateShipmentInput {
   brokerId: ID!
   cargoDetails: CargoDetailsInput!
+  carrierId: ID
   deliveryLocation: LocationInput!
   driverId: ID
   pickupLocation: LocationInput!
@@ -123,10 +150,23 @@ input DimensionsInput {
 }
 
 type Driver {
+  carrierId: ID!
   contact: Contact!
   driverId: ID!
   licenseNumber: String!
   name: String!
+}
+
+type FAQ {
+  answer: String!
+  audience: String
+  category: String
+  createdAt: String
+  id: ID!
+  isActive: Boolean
+  question: String!
+  tags: [String]
+  updatedAt: String
 }
 
 type General {
@@ -168,10 +208,12 @@ input LocationInput {
 type Mutation {
   addTrackingUpdate(input: TrackingUpdateInput!, shipmentId: ID!): Shipment!
   createBroker(input: CreateBrokerInput!): Broker
+  createCarrier(input: CreateCarrierInput!): Carrier
   createPrivacyPolicy(introduction: String!, lastUpdated: String!, sections: [PrivacyPolicySectionInput!]!): PrivacyPolicy
   createShipment(input: CreateShipmentInput!): Shipment!
   createTermsOfUse(effectiveDate: String!, terms: TermsInput!): TermsOfUse
   updateBroker(input: UpdateBrokerInput!): Broker
+  updateCarrier(input: UpdateCarrierInput!): Carrier
   updatePrivacyPolicy(id: ID!, introduction: String!, lastUpdated: String!, sections: [PrivacyPolicySectionInput!]!): PrivacyPolicy
   updateShipmentStatus(shipmentId: ID!, status: ShipmentStatus!): Shipment!
   updateTermsOfUse(id: ID!, terms: TermsInput!): TermsOfUse
@@ -199,8 +241,11 @@ input PrivacyPolicySectionInput {
 type Query {
   broker(brokerId: ID!): Broker
   brokers: [Broker]!
+  carrier(carrierId: ID!): Carrier
+  carriers: [Carrier!]!
   driver(driverId: ID!): Driver
   drivers: [Driver!]!
+  faqs(audience: String, category: String, isActive: Boolean): [FAQ]
   privacyPolicy(id: ID!): PrivacyPolicy
   shipment(shipmentId: ID!): Shipment
   shipments(status: ShipmentStatus): [Shipment!]!
@@ -283,6 +328,7 @@ input TrackingUpdateInput {
 
 type Truck {
   capacity: Float!
+  carrierId: ID!
   licensePlate: String!
   model: String!
   truckId: ID!
@@ -294,4 +340,17 @@ input UpdateBrokerInput {
   contact: ContactInput
   licenseNumber: String
   name: String
+}
+
+input UpdateCarrierInput {
+  address: AddressInput!
+  carrierId: ID!
+  companyId: String!
+  contact: ContactInput!
+  driverIDs: [ID!]!
+  legalForm: String
+  name: String!
+  rating: Float
+  truckIDs: [ID!]!
+  verified: Boolean
 }
