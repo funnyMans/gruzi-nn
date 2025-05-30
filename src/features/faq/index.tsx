@@ -1,35 +1,35 @@
+// import {
+//   GetFaQsQuery,
+//   GetFaQsQueryVariables,
+// } from '@/shared/gql/client/__generated__/graphql';
+// import { GET_FAQS } from '@/shared/gql/client/faq/faqQueries';
+// import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
 import {
-  GetFaQsQuery,
-  GetFaQsQueryVariables,
-} from '@/shared/gql/client/__generated__/graphql';
-import { GET_FAQS } from '@/shared/gql/client/faq/faqQueries';
-import { query } from '@/shared/providers/apollo-client/apollo-client-SSR';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  // Accordion,
+  // AccordionSummary,
+  // AccordionDetails,
   Typography,
   Box,
-  Grid,
+  // Grid,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 
 const FaqListContainer = async () => {
-  const { data } = await query<GetFaQsQuery, GetFaQsQueryVariables>({
-    query: GET_FAQS,
-    variables: {},
-  });
+  // const { data } = await query<GetFaQsQuery, GetFaQsQueryVariables>({
+  //   query: GET_FAQS,
+  //   variables: {},
+  // });
 
-  const faqs = data?.faqs;
+  // const faqs = data?.faqs;
 
-  if (!faqs || faqs.length === 0) {
-    return (
-      <Box sx={{ p: 4 }}>
-        <Typography variant='h6'>No FAQs available.</Typography>
-      </Box>
-    );
-  }
+  // if (!faqs || faqs.length === 0) {
+  //   return (
+  //     <Box sx={{ p: 4 }}>
+  //       <Typography variant='h6'>No FAQs available.</Typography>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box sx={{ p: 4 }}>
@@ -37,7 +37,7 @@ const FaqListContainer = async () => {
         Frequently Asked Questions
       </Typography>
 
-      <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
         {faqs.map((faq) => (
           <Grid
             key={faq?.id}
@@ -56,7 +56,7 @@ const FaqListContainer = async () => {
             </Accordion>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };
